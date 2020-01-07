@@ -1,0 +1,182 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DressEvent</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.rewardsnetwork.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DressEvent (com.rewardsnetwork.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DressEvent</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DressEvent$</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.3%
+  </span>
+  <span class="absValue">
+    (12/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.1%
+  </span>
+  <span class="absValue">
+    (33/ 34)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    92.9%
+  </span>
+  <span class="absValue">
+    (13/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.1%
+  </span>
+  <span class="absValue">
+    (34/ 35)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.rewardsnetwork.service
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import scala.collection.mutable.ListBuffer
+<i>4</i>&nbsp;
+<b class="pc"><i>5</i>&nbsp;case class DressEvent(temperatureType: String, dressCommandsCursor: Iterator[Int], inputDressCommandBuilder: ListBuffer[Int], dressBuilderResponse: ListBuffer[String])</b>
+<i>6</i>&nbsp;
+<b class="fc"><i>7</i>&nbsp;object DressEvent {</b>
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;  def getDressed(args: Array[String]): DressEvent = {
+<b class="fc"><i>10</i>&nbsp;    checkForInvalidArguments(args)</b>
+<b class="fc"><i>11</i>&nbsp;    val temperatureType = args(0)</b>
+<b class="fc"><i>12</i>&nbsp;    val dressCommands = DressEvent.splitArray(args(1))</b>
+<b class="fc"><i>13</i>&nbsp;    val dressEvent = new DressEvent(temperatureType, dressCommands.toIterator, ListBuffer[Int](), ListBuffer[String]())</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    //This function is responsible to process each input dress command and apply appropriate rules based on HOT or COLD season
+<b class="fc"><i>16</i>&nbsp;    processDressEventCommands(temperatureType, dressEvent)</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;
+<b class="fc"><i>19</i>&nbsp;    val allClothesOnOrNot = isAllClothesPutOnOrNot(temperatureType, dressEvent.inputDressCommandBuilder.length)</b>
+<i>20</i>&nbsp;
+<b class="fc"><i>21</i>&nbsp;    def SUCCESS = println(&quot;SUCCESS&quot;)</b>
+<i>22</i>&nbsp;
+<b class="fc"><i>23</i>&nbsp;    def FAILURE = println(&quot;FAILURE&quot;)</b>
+<i>24</i>&nbsp;
+<b class="fc"><i>25</i>&nbsp;    if (!dressEvent.dressBuilderResponse.contains(&quot;fail&quot;) &amp;&amp; allClothesOnOrNot) SUCCESS else FAILURE</b>
+<i>26</i>&nbsp;
+<b class="fc"><i>27</i>&nbsp;    println(s&quot;INPUT: &quot; + dressEvent.temperatureType + &quot;,&quot; + dressCommands.mkString(&quot;, &quot;))</b>
+<b class="fc"><i>28</i>&nbsp;    println(s&quot;OUTPUT: &quot; + dressEvent.dressBuilderResponse.mkString(&quot;, &quot;))</b>
+<b class="fc"><i>29</i>&nbsp;    dressEvent</b>
+<i>30</i>&nbsp;  }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;  private def processDressEventCommands(temperatureType: String, dressEvent: DressEvent) = {
+<b class="fc"><i>33</i>&nbsp;    while (dressEvent.dressCommandsCursor.hasNext) {</b>
+<b class="fc"><i>34</i>&nbsp;      val dressCommand = dressEvent.dressCommandsCursor.next()</b>
+<b class="fc"><i>35</i>&nbsp;      temperatureType match {</b>
+<b class="fc"><i>36</i>&nbsp;        case &quot;HOT&quot; =&gt; DressHotEvent.checkHotDressStackRules(dressEvent, dressCommand)</b>
+<b class="fc"><i>37</i>&nbsp;        case &quot;COLD&quot; =&gt; DressColdEvent.checkColdDressStackRules(dressEvent, dressCommand)</b>
+<i>38</i>&nbsp;      }
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;  }
+<i>41</i>&nbsp;
+<b class="fc"><i>42</i>&nbsp;  val validHotAllClothes = 6</b>
+<b class="fc"><i>43</i>&nbsp;  val validColdAllClothes = 8</b>
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;  protected def isAllClothesPutOnOrNot(tempType: String, lengthOfDressCommands: Int) = {
+<b class="fc"><i>46</i>&nbsp;    tempType match {</b>
+<b class="fc"><i>47</i>&nbsp;      case &quot;HOT&quot; =&gt; if (lengthOfDressCommands == validHotAllClothes) true else false</b>
+<b class="fc"><i>48</i>&nbsp;      case &quot;COLD&quot; =&gt; if (lengthOfDressCommands == validColdAllClothes) true else false</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;  }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;  protected def checkForInvalidArguments(args: Array[String]) = {
+<b class="fc"><i>53</i>&nbsp;      if(args == null || args.length &lt; 2 )</b>
+<b class="fc"><i>54</i>&nbsp;        printInvalidStatements(&quot;The arguments are invalid&quot;)</b>
+<i>55</i>&nbsp;      else {
+<b class="fc"><i>56</i>&nbsp;        val firstParameter = args(0)</b>
+<b class="fc"><i>57</i>&nbsp;        firstParameter match {</b>
+<b class="fc"><i>58</i>&nbsp;          case _ if firstParameter == &quot;HOT&quot; || firstParameter == &quot;COLD&quot; =&gt;</b>
+<b class="fc"><i>59</i>&nbsp;          case _ =&gt; printInvalidStatements(&quot;Usage: Invalid &lt;temperature Type&gt; HOT|COLD&quot;)</b>
+<i>60</i>&nbsp;        }
+<i>61</i>&nbsp;      }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;  }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;  private def printInvalidStatements(message: String) = {
+<b class="fc"><i>66</i>&nbsp;    System.err.println(s&quot;Usage: RewardsMainApplication &lt;temperature Type&gt; HOT|COLD &lt;dressingCommands&gt; 1,2,3,4,5,6,7,8 | 8,2,5 |...&gt; &quot; + &quot;\n valid arguments HOT 8,4,6,1,2,7&quot;)</b>
+<b class="fc"><i>67</i>&nbsp;    throw new RuntimeException(message)</b>
+<i>68</i>&nbsp;  }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;  private def splitArray(inputString: String): Array[Int] = {
+<b class="fc"><i>71</i>&nbsp;    inputString.split(&quot;,&quot;).flatMap(str =&gt; scala.util.Try(str.toInt).toOption)</b>
+<i>72</i>&nbsp;  }
+<b class="fc"><i>73</i>&nbsp;}</b>
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-01-07 13:39</div>
+</div>
+</body>
+</html>
