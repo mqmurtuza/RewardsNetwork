@@ -45,7 +45,7 @@ class DressHotEventTest extends FunSuite {
           DressHotEvent.checkHotDressStackRules(dressEvent, dressCommand)
         }
       }
-      assert(thrown.getMessage === s"The "+data._2+" is invalid dressCommand")
+      assert(thrown.getMessage === s"DressCommand "+data._2+" is invalid")
     }
   }
 

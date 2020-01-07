@@ -47,7 +47,7 @@ class DressEventTest extends FunSuite {
         val thrown = intercept[Exception] {
           DressEvent.getDressed(data._1)
         }
-        assert(thrown.getMessage === s"The "+data._2+" is invalid dressCommand")
+        assert(thrown.getMessage === s"DressCommand "+data._2+" is invalid")
       }
     }
 

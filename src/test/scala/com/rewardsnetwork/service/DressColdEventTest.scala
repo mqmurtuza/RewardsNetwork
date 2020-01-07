@@ -45,7 +45,7 @@ class DressColdEventTest extends FunSuite {
           DressColdEvent.checkColdDressStackRules(dressEvent, dressCommand)
         }
       }
-      assert(thrown.getMessage === s"The "+data._2+" is invalid dressCommand")
+      assert(thrown.getMessage === s"DressCommand "+data._2+" is invalid")
     }
   }
 

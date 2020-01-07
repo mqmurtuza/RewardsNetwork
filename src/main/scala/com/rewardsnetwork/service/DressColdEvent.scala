@@ -21,7 +21,7 @@ object DressColdEvent {
     dressEvent.inputDressCommandBuilder += dressCommand
     val dressResp = dressColdResponse(dressCommand)
     dressResp match {
-      case INVALID => throw new Exception(s"The " + dressCommand + " is invalid dressCommand")
+      case INVALID => throw new Exception(s"DressCommand " + dressCommand + " is invalid")
       case _ => {
         val last = dressEvent.inputDressCommandBuilder.last
         if (dressEvent.inputDressCommandBuilder.head != 8 )

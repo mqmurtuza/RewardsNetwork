@@ -15,7 +15,6 @@ object DressEvent {
     //This function is responsible to process each input dress command and apply appropriate rules based on HOT or COLD season
     processDressEventCommands(temperatureType, dressEvent)
 
-
     val allClothesOnOrNot = isAllClothesPutOnOrNot(temperatureType, dressEvent.inputDressCommandBuilder.length)
 
     def SUCCESS = println("SUCCESS")
