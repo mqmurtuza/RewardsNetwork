@@ -2,9 +2,9 @@
 This is a sbt based scala program developed using sbt,scala,FunSuite and IntelliJ. This project has all source code and "TestReport" for test coverage.
 
 # References
-https://alvinalexander.com/scala/
-https://docs.scala-lang.org/
-https://github.com/rockthejvm
+    1. https://alvinalexander.com/scala/
+    2. https://docs.scala-lang.org/
+    3. https://github.com/rockthejvm
 
 # How to dowload the program
 - Either clone the repo or download as zip 
