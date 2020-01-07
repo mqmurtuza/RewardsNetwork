@@ -8,8 +8,8 @@ https://github.com/rockthejvm
 
 # How to dowload the program
 - Either clone the repo or download as zip 
-    1. git clone <repo name> 
-    2. cd <repo-name>
+    1. git clone RewardsNetwork 
+    2. cd RewardsNetwork
 
 # How to build the package 
  - sbt clean package
