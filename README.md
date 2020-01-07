@@ -1,5 +1,5 @@
 # RewardsNetwork
-This is a sbt based scala program to take the dress command rules 
+This is a sbt based scala program developed using sbt,scala,FunSuite and IntelliJ. This project has all source code and "TestReport" for test coverage.
 
 # How to dowload the program
 - Either clone the repo or download as zip 
